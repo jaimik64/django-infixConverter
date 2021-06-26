@@ -1,0 +1,30 @@
+body {
+  text-align: center;
+}
+h1 {
+  text-align: center;
+}
+#main {
+  height: 100%;
+  padding: 5px;
+  position: relative;
+  top: auto;
+  width: 58%;
+  border-radius: 10px;
+  float: left;
+  background-color: #e9ecef;
+}
+#algos {
+  padding: 5px;
+  width: 38%;
+  background-color: #e9ecef;
+  border-radius: 10px;
+  margin-left: 60%;
+}
+header {
+  z-index: 2;
+  transition: all 0.3s ease-in;
+  background-color: black;
+  color: white;
+  margin-bottom: 2%;
+}

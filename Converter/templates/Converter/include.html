@@ -1,0 +1,218 @@
+<html>
+    <head>
+        <title>Infix To RPN Conversion</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+         <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+        
+        <style>
+            body{
+                align-items: center;
+            }
+            header h1{
+                text-align: center;
+                font-size: 54px;
+            }
+            #main{
+                height: 100%;
+                padding: 5px;
+                width: 58%;
+                border-radius: 10px;
+                float: left;
+                background-color:#e9ecef;
+            }
+            #algos{
+                padding: 5px;
+                width: 38%;
+                background-color: #e9ecef;
+                border-radius: 10px;
+                margin-left: 60%;
+            }
+            header{
+                background-color: black;
+                color: white;
+                margin-bottom: 2%;
+            }
+            #main p{
+                font-size: 18   px;
+            }
+            h2{
+                font-size: 22px;
+            }
+            #choice{
+                padding-left: 25%;
+                border: 2px solid black;
+                border-radius: 5px;
+                width: auto;
+                margin: 5%;
+                padding-top: 2%;
+                padding-bottom: 2%;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Infix to Postfix & Prefix </h1><hr/>             
+        </header>
+
+        <div id="main">
+            <p style="text-align: center;">This is a simple infix to prefix or postfix Converter.</p><hr>
+            <p style="text-align: center;">Enter the Infix Expression below in box and choose Conversion Method.</p>
+            <p style="text-align: center;">Type the Expression below without space </p>
+            <p style="text-align: center;">format 1 : 2+4/5*(5-3)^5^4</p>
+            <p style="text-align: center;">format 2: A+B/C*(D-A)^F^H </p> 
+            <p style="text-align: center;">(NO SPACES)</p>
+
+            {% block form %}
+            {% endblock %}
+
+        </div>
+
+            <script>
+                $(document).ready(function(){
+                    $("#postfixDetails").hide();
+                    $("#prefixDetails").hide();
+                    $("#evalPostfixDetails").hide();
+                    $("#evalPrefixDetails").hide();
+            
+                    $("#postfix").click(function(){
+                        $("#postfixDetails").slideToggle(1000);
+                        $("#prefixDetails").hide();
+                        $("#evalPrefixDetails").hide();
+                        $("#evalPostfixDetails").hide();
+                    });
+            
+                    $("#prefix").click(function(){
+                        $("#prefixDetails").slideToggle(1000);
+                        $("#postfixDetails").hide();
+                        $("#evalPrefixDetails").hide();
+                        $("#evalPostfixDetails").hide();
+                    });
+                    $("#evalPostfix").click(function(){
+                        $("#evalPostfixDetails").slideToggle(1000);
+                        $("#prefixDetails").hide();
+                        $("#postfixDetails").hide();
+                        $("#evalPrefixDetails").hide();
+                    });
+                    $("#evalPrefix").click(function(){
+                        $("#evalPrefixDetails").slideToggle(1000);
+                        $("#prefixDetails").hide();
+                        $("#postfixDetails").hide();
+                        $("#evalPostfixDetails").hide();
+                    });
+                    
+                    $('#converterForm').on('change',function(){
+                        var choice =  $('input[name=type]:checked','#converterForm').val();
+                        if(choice == 'prefix'){
+                            $("#prefixDetails").slideDown(1000);
+                            $("#postfixDetails").hide();
+                            $("#evalPrefixDetails").hide();
+                            $("#evalPostfixDetails").hide(); 
+                        }else if(choice == 'postfix'){
+                            $("#postfixDetails").slideDown(1000);
+                            $("#prefixDetails").hide();
+                            $("#evalPrefixDetails").hide();
+                            $("#evalPostfixDetails").hide();
+                        }else if(choice == 'evalpostfix'){
+                            $("#evalPostfixDetails").slideDown(1000);
+                            $("#prefixDetails").hide();
+                            $("#postfixDetails").hide();
+                            $("#evalPrefixDetails").hide();
+                        }else if(choice == 'evalprefix'){
+                            $("#evalPrefixDetails").slideDown(1000);
+                            $("#prefixDetails").hide();
+                            $("#postfixDetails").hide();
+                            $("#evalPostfixDetails").hide();
+                        }
+                    });
+                });
+            </script>
+            <div id="algos">
+                <!-- conversion -->
+                <div id="used"> 
+                    <h1>Algorithm Used</h1>
+                    <hr/>
+                    <div>
+                        <h2 id="postfix">Postfix Conversion</h2>
+                        <ul id="postfixDetails">
+                            <li>Step 1: Add ')' to the end of the infix expression</li>
+                            <li> Step 2: Push '(' onto the stack </li>
+                            <li>
+                                Step 3: Repeat until each character in the infix notation is scanned<br/>
+            
+                                IF a '(' is encountered, push it on the stack <br/>
+                                IF an operand (whetheradigit oracharacter) is encountered, add it postfix expression.<br/>
+                                IF a ')' is encountered, then<br/>
+                                a. Repeatedly pop from stack and add it to the postfix expression until a '(' is encountered.<br/>
+                                b. Discard the ')'.That is, remove the(from stack and do not add it to the postfix expression<br/>
+                                    IF an operator O is encountered, then<br/>
+                                        a. Repeatedly pop from stack and add each operator ( popped from the stack) to the postfix expression which has the same precedence orahigher precedence than O<br/>
+                                        b. Push the operator to the stack<br/>
+            
+                                [END OF IF] 
+                            </li>
+                            <li>
+                                Step 4: Repeatedly pop from the stack and add it to the postfix expression until the stack is empty.<br/>
+                            </li>
+                            <li>Step 5: EXIT </li>
+                        </ul>
+                    </div>
+                    <div >
+                        <h2 id="prefix">Prefix Conversion</h2>
+                        <ul id="prefixDetails">
+                            <li>
+                                Step 1: Reverse the infix string. Note that while reversing the string you must interchange left and right parentheses. <br/>
+                            </li>
+                            <li>
+                                Step 2: Obtain the postfix expression of the infix expression Step 1. <br/>
+                            </li>
+                            <li>
+                                Step 3: Reverse the postfix expression to get the prefix expression<br/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- evaluation -->
+                <div>
+                    <div>
+                        <h2 id="evalPostfix">Postfix Evaluation</h2>
+                        <ul id="evalPostfixDetails">
+                            <li>Step 1: Add a ')' at the end of the postfix expression</li>
+                            <li>Step 2: Scan every character of the postfix expression and repeat Step 3 and 4 until ')' is encountered.</li>
+                            <li>Step 3: IF an operand is encountered, Push it on the stack
+                                IF an operator is encountered, then
+                                
+                                    a: Pop the top two elements from the stack as A and B
+                                    b: Evaluate B operator A, where A is the topmost element and B is the element below A.
+                                    c: Push the result of evaluation on the stack
+                                    [END OF IF]
+                                </li>
+                            <li>Step 4: Set result = stack's top elements</li>
+                            <li>Step 5: Exit</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 id="evalPrefix">Prefix Evaluation</h2>
+                        <ul id="evalPrefixDetails">
+                            <li>Step 1: Get Prefix expression as it is</li>
+                            <li>Step 2: Repeat untill all the characters in prefix
+                                expression have been scanned
+                                
+                                    a: Read the prefix expression from right to left one at a time
+                                    b: If the readed character is an operand, push it on the stack
+                                    c: If the readed character is an operator, then
+                                        i: pop two values from the stack.
+                                        ii: Apply the operation on the operands.
+                                        iii: Push the result onto the stack.
+                                </li>
+                            <li>Step 3: Exit</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>

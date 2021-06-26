@@ -1,0 +1,48 @@
+{% extends "Converter/include.html" %}
+
+{% block form %}
+    <form method="POST" action="#" id="converterForm">
+        {% csrf_token %}
+        <div class="form-group" style="margin-left: 20%; margin-right: 20%;">
+            <label for="Expression">Enter Expression</label>
+            <input type="text" name="exp" class="form-control" id="Expression" aria-describedby="emailHelp" placeholder="Enter Expression" required>
+        </div>
+        <div id="choice">
+            <div class="form-check form-check-inline" >
+                <label>Convert &nbsp;: &nbsp;</label>
+                <input class="form-check-input" type="radio" name="type" id="inlineRadio1" value="postfix"/>
+                <label class="form-check-label" for="inlineRadio1">Postfix</label>
+                
+                <input class="form-check-input" type="radio" name="type" id="inlineRadio2" value="prefix" style="margin-left: 5%;"/>
+                <label class="form-check-label" for="inlineRadio2">Prefix</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label>Evaluation &nbsp;: &nbsp;</label>
+                <input class="form-check-input" type="radio" name="type" id="inlineRadio3" value="evalpostfix"/>
+                <label class="form-check-label" for="inlineRadio3">Evaluate Postix Expression</label>
+                
+                <input class="form-check-input" type="radio" name="type" id="inlineRadio4" value="evalprefix" style="margin-left: 5%;"/>
+                <label class="form-check-label" for="inlineRadio4">Evaluate Prefix Expression</label>
+            </div>
+        </div>
+        <hr/>
+        <center><button name="submit" class="btn btn-primary">Convert</button></center>
+    </form>
+    <div id="answer">
+            <h2>Entered Expression : {{ finalAnswer.0 }}</h2>
+
+            {% if choice == 'two' %}
+                <h2>Prefix Expression : {{ finalAnswer.1 }}</h2>
+                <h2>Postfix Expression : {{ finalAnswer.2 }}</h2>
+            {% elif choice == 'prefix' %}
+                <h2>Prefix Expression : {{ finalAnswer.1 }}</h2>
+            {% elif choice == 'postfix' %}
+                <h2>Postfix Expression : {{ finalAnswer.1 }}</h2>
+            {% elif choice == 'evalprefix' %}
+                <h2>Prefix Evaluation : {{ finalAnswer.1 }}</h2>
+            {% elif choice == 'evalpostfix' %}
+                <h2>Postfix Expression : {{ finalAnswer.1 }}</h2>
+            {% endif %}
+    </div>
+
+{% endblock %}
